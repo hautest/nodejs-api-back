@@ -13,3 +13,8 @@ app.use(cors());
 app.get("/hello-world", function (req, res) {
   res.send("hello world");
 });
+
+app.post("/post", (req, res) => {
+  const { value } = req.body;
+  res.send(JSON.stringify({ formattingValue: `${value} is formatted...` }));
+});
