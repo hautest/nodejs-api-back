@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-
+const { MongoClient, ServerApiVersion } = require("mongodb");
 const app = express();
 
 app.listen(8080, function () {
@@ -10,11 +10,18 @@ app.listen(8080, function () {
 app.use(express.json());
 app.use(cors());
 
-app.get("/hello-world", function (req, res) {
-  res.send("hello world");
+const uri =
+  "mongodb+srv://lee:parangse29@todolist.myluw50.mongodb.net/?retryWrites=true&w=majority";
+const client = new MongoClient(uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  serverApi: ServerApiVersion.v1,
 });
-
-app.post("/post", (req, res) => {
-  const { value } = req.body;
-  res.send(JSON.stringify({ formattingValue: `${value} is formatted...` }));
-});
+client
+  .connect((err) => {
+    const collection = client.db("test").collection("devices");
+    client.close();
+  })
+  .then(() => {
+    console.log("mongoDB 연결 !");
+  });
